@@ -88,5 +88,16 @@ def main():
         board = place_ships()
         hidden_board = [['O' for _ in range(7)] for _ in range(7)]
 
+        while True:
+            clear()
+            print_board(hidden_board)
+            row, col = get_shot()
+
+            if hidden_board[row][col] != 'O':
+                print("You've already shot at this location. Try again.")
+                continue
+
+            shots += 1
+
 if __name__ == "__main__":
     main()
