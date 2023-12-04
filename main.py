@@ -99,5 +99,14 @@ def main():
 
             shots += 1
 
+            if board[row][col] != 'O':
+                print("Hit!")
+                hidden_board[row][col] = 'X'
+            else:
+                print("Miss!")
+                hidden_board[row][col] = 'L'
+
+                
+
 if __name__ == "__main__":
     main()
