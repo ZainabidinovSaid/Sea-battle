@@ -20,7 +20,26 @@ def print_board(board):
         print(f"{i + 1}|", end=" ")
         for j in range(7):
             print(board[i][j], end=" ")
-        print()        
+        print()  
+
+def place_ship(board, ship):
+    placed = False
+    while not placed:
+        orientation = random.choice(['horizontal', 'vertical'])
+        if orientation == 'horizontal':
+            start_col = random.randint(0, 6 - ship.size)
+            start_row = random.randint(0, 6)
+            if all(board[start_row][start_col + i] == ' ' for i in range(ship.size)):
+                for i in range(ship.size):
+                    board[start_row][start_col + i] = str(ship.size)
+                placed = True
+        else:
+            start_col = random.randint(0, 6)
+            start_row = random.randint(0, 6 - ship.size)
+            if all(board[start_row + i][start_col] == ' ' for i in range(ship.size)):
+                for i in range(ship.size):
+                    board[start_row + i][start_col] = str(ship.size)
+                placed = True              
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')        
