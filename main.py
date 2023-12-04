@@ -74,4 +74,16 @@ def place_ship(board, ship):
             
 
 def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')        
+    os.system('cls' if os.name == 'nt' else 'clear') 
+
+def main():
+    clear_screen()
+    
+    player_name = input("Enter your name: ")
+    shots = 0
+
+    while True:
+        clear_screen()
+
+if __name__ == "__main__":
+    main()
