@@ -1,18 +1,6 @@
 import os
 import random
 
-class Ship:
-    def __init__(self, size):
-        self.size = size
-        self.hits = 0
-
-class Player:
-    def __init__(self, name):
-        self.name = name
-        self.board = [[' ' for _ in range(7)] for _ in range(7)]
-        self.ships = [Ship(3), Ship(2), Ship(2), Ship(1), Ship(1), Ship(1), Ship(1)]
-        self.shots = set()        
-
 def print_board(board):
     print("   A B C D E F G")
     print("  ----------------")
@@ -20,9 +8,9 @@ def print_board(board):
         print(f"{i + 1}|", end=" ")
         for j in range(7):
             print(board[i][j], end=" ")
-        print()  
+        print()
 
-def place_ship(board, ship):
+def place_ships():
     ships = [(3, 's'), (2, 'm'), (2, 'm'), (1, 's'), (1, 's'), (1, 's'), (1, 's')]
 
     board = [['O' for _ in range(7)] for _ in range(7)]
@@ -31,7 +19,7 @@ def place_ship(board, ship):
         def is_clear(x, y):
             if 0 <= x < 7 and 0 <= y < 7 and board[y][x] == 'O':
                 return True
-            return False 
+            return False
 
         def is_clear_around(x, y):
             for i in range(-1, 2):
@@ -71,14 +59,25 @@ def place_ship(board, ship):
                 break
 
     return board
-            
+
+def get_shot():
+    while True:
+        try:
+            # Convert input to uppercase for case-insensitive comparison
+            shot = input("Enter coordinates for your shot (e.g., A5): ").upper()
+            if len(shot) == 2 and 'A' <= shot[0] <= 'G' and '1' <= shot[1] <= '7':
+                return int(shot[1]) - 1, ord(shot[0]) - ord('A')
+            else:
+                print("Invalid input. Please enter a valid coordinate.")
+        except ValueError:
+            print("Invalid input. Please enter a valid coordinate.")
 
 def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear') 
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-def main():
+def start_game():
     clear_screen()
-    
+
     player_name = input("Enter your name: ")
     shots = 0
 
@@ -89,7 +88,7 @@ def main():
         hidden_board = [['O' for _ in range(7)] for _ in range(7)]
 
         while True:
-            clear()
+            clear_screen()
             print_board(hidden_board)
             row, col = get_shot()
 
@@ -106,7 +105,15 @@ def main():
                 print("Miss!")
                 hidden_board[row][col] = 'L'
 
-                
+            if all(cell == 'X' or cell == 'L' for row in hidden_board for cell in row):
+                print("Booyah! You sank all the ships!")
+                print(f"You made {shots} shots.")
+                break
+
+        play_again = input("Do you want to play again? (yes/no): ").lower()
+        if play_again != 'yes':
+            print("Game Over. Here is the sorted list of players:")
+            break
 
 if __name__ == "__main__":
-    main()
+    start_game()
