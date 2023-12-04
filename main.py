@@ -23,23 +23,15 @@ def print_board(board):
         print()  
 
 def place_ship(board, ship):
-    placed = False
-    while not placed:
-        orientation = random.choice(['horizontal', 'vertical'])
-        if orientation == 'horizontal':
-            start_col = random.randint(0, 6 - ship.size)
-            start_row = random.randint(0, 6)
-            if all(board[start_row][start_col + i] == ' ' for i in range(ship.size)):
-                for i in range(ship.size):
-                    board[start_row][start_col + i] = str(ship.size)
-                placed = True
-        else:
-            start_col = random.randint(0, 6)
-            start_row = random.randint(0, 6 - ship.size)
-            if all(board[start_row + i][start_col] == ' ' for i in range(ship.size)):
-                for i in range(ship.size):
-                    board[start_row + i][start_col] = str(ship.size)
-                placed = True              
+    ships = [(3, 's'), (2, 'm'), (2, 'm'), (1, 's'), (1, 's'), (1, 's'), (1, 's')]
+
+    board = [['O' for _ in range(7)] for _ in range(7)]
+
+    def is_valid_placement(x, y, size, orientation, board):
+        def is_clear(x, y):
+            if 0 <= x < 7 and 0 <= y < 7 and board[y][x] == 'O':
+                return True
+            return False             
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')        
