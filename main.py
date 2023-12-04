@@ -84,6 +84,9 @@ def main():
 
     while True:
         clear_screen()
+        print(f"Player: {player_name}\n")
+        board = place_ships()
+        hidden_board = [['O' for _ in range(7)] for _ in range(7)]
 
 if __name__ == "__main__":
     main()
